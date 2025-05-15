@@ -48,5 +48,5 @@ for button_text in buttons:
 button_clear = tk.Button(window, text='C', padx=40, pady=20, command=button_clear)
 button_clear.grid(row=5, column=0, columnspan=4, sticky="we")
 
-#wow
+
 window.mainloop()
