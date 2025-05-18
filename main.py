@@ -1,9 +1,16 @@
 import tkinter as tk
+from tkinter import ttk
+import time
+
 window = tk.Tk()
 window.title("Calculator App")
 
+#secret number is 12345 followed by enter
+
 entry = tk.Entry(window, width=20, borderwidth=5, justify=tk.RIGHT)
 entry.grid(row=0, column=0, columnspan=4, padx=10, pady=10)
+
+
 
 def button_click(number):
     current = entry.get()
@@ -13,14 +20,41 @@ def button_click(number):
 def button_clear():
     entry.delete(0, tk.END)
 
+def clear_window():
+    for widget in window.winfo_children():
+        widget.destroy()
+
+def secret_timer():
+    progress = ttk.Progressbar(window, orient=tk.HORIZONTAL, length=300, mode="determinate")
+    progress.pack(padx=10, pady=10)
+    progress.start()
+    for i in range(100):
+        time.sleep(1)
+        progress['value'] = 1
+        window.update_idletasks()
+    progress.stop()
+
+
 def button_equal():
-    try:
-        result = eval(entry.get())
+    #secret area access
+    expression = entry.get()
+    if expression == "12345":
         entry.delete(0, tk.END)
-        entry.insert(0, result)
-    except:
-        entry.delete(0, tk.END)
-        entry.insert(0, "Error, invalid input")
+        #entry.insert(0, "This is the secret area.")
+        clear_window()
+        window.geometry("1280x720")
+        secret_timer()
+
+
+
+    else:
+        try:
+            result = eval(entry.get())
+            entry.delete(0, tk.END)
+            entry.insert(0, result)
+        except:
+            entry.delete(0, tk.END)
+            entry.insert(0, "Error, invalid input")
 
 
 buttons = [
